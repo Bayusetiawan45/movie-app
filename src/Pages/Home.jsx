@@ -1,14 +1,14 @@
-import axios from 'axios'
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useState } from 'react'
 import Banner from '../Components/Banner'
 import Card from '../Components/Card'
 import MainLayout from '../Layouts/MainLayout'
 import useDebounce from '../Utils/useDebounce'
+import { useMovie } from '../Context/useMovieContext'
 
 export default function Home() {
-  const [movies, setMovies] = useState([])
   const [query, setQuery] = useState('')
-
+  const { getDataMovie, movies } = useMovie()
   const debounceSearch = useDebounce(query, query ? 500 : 0)
 
   const filteredItems = useMemo(() => {
@@ -21,15 +21,6 @@ export default function Home() {
     e.preventDefault()
     const { value } = e.target
     setQuery(value)
-  }
-
-  const getDataMovie = async () => {
-    try {
-      const results = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
-      setMovies(results.data.results)
-    } catch (error) {
-      console.log(error.message)
-    }
   }
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 export default function Card(props) {
   const navigate = useNavigate()
   const {title, release_date, poster_path, id} = props
-  const imageUrl = `https://www.themoviedb.org/t/p/w440_and_h660_face${poster_path}`
+  const imageUrl = `${process.env.REACT_APP_BASE_IMG_URL}${poster_path}`
   
   return (
     <div className='col col-auto text-center'>

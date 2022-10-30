@@ -1,29 +1,19 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import MainLayout from '../Layouts/MainLayout'
+import { useMovie } from '../Context/useMovieContext'
 
 export default function MovieDetail() {
   const { id } = useParams()
-  const [detail, setDetail] = useState([])
+  const { detail, getMovieDetail } = useMovie()
 
-  const getMovieDetail = async () => {
-    try {
-      const results = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
-      setDetail(results.data)
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-  
-  console.log(detail)
+  const posterUrl = `${process.env.REACT_APP_BASE_IMG_URL}${detail?.poster_path}`
+  const backdropUrl = `${process.env.REACT_APP_BASE_IMG_URL}${detail?.backdrop_path}`
 
   useEffect(() => {
-    getMovieDetail()
+    getMovieDetail(id)
   }, [])
-
-  const posterUrl = `https://www.themoviedb.org/t/p/w440_and_h660_face${detail?.poster_path}`
-  const backdropUrl = `https://www.themoviedb.org/t/p/w440_and_h660_face${detail?.backdrop_path}`
 
   return (
     <MainLayout>

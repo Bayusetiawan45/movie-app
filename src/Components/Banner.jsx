@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Banner(props) {
   const { movie } = props
-  const posterUrl = `https://www.themoviedb.org/t/p/w440_and_h660_face${movie?.poster_path}`
-  const backdropUrl = `https://www.themoviedb.org/t/p/w440_and_h660_face${movie?.backdrop_path}`
+  const posterUrl = `${process.env.REACT_APP_BASE_IMG_URL}${movie?.poster_path}`
+  const backdropUrl = `${process.env.REACT_APP_BASE_IMG_URL}${movie?.backdrop_path}`
   return (
     <div className='position-relative' style={{
       backgroundImage: `url(${backdropUrl})`,
