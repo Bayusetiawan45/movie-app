@@ -15,6 +15,8 @@ export default function MovieDetail() {
       console.log(error.message)
     }
   }
+  
+  console.log(detail)
 
   useEffect(() => {
     getMovieDetail()
