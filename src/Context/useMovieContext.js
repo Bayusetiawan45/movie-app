@@ -1,6 +1,11 @@
 import axios from 'axios'
 import React, { createContext, useContext, useState } from 'react'
 
+const MovieService = axios.create({
+  baseURL: 'https://api.themoviedb.org/3/movie/',
+  timeout: 1000
+})
+
 const MovieContext = createContext({})
 
 export function useMovie() {
@@ -15,7 +20,7 @@ export default function MovieProvider({children}) {
   const getDataMovie = async () => {
     try {
       setLoading(true)
-      const results = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
+      const results = await MovieService.get(`popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
       setMovies(results.data.results)
       setLoading(false)
     } catch (error) {
@@ -27,7 +32,7 @@ export default function MovieProvider({children}) {
   const getMovieDetail = async (id) => {
     try {
       setLoading(true)
-      const results = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+      const results = await MovieService.get(`${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
       setDetail(results.data)
       setLoading(false)
     } catch (error) {
